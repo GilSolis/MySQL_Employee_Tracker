@@ -1,6 +1,6 @@
-create database company;
+create database initech;
 
-use company;
+use initech;
 
 create table department (
 id INTEGER(11) NOT NULL,
@@ -12,14 +12,15 @@ create table role (
 id INTEGER(11) NOT NULL,
 title VARCHAR(30) NOT NULL,
 salary DECIMAL(10,2) NOT NULL,
-department_id INTEGER(11 NOT NULL),
+department_id INTEGER(11) NOT NULL,
 PRIMARY KEY (id)
-)
+);
 
 create table employees (
-id INTEGER(11),
+id INTEGER(11) auto_increment not null,
 first_name VARCHAR(30) NOT NULL,
 last_name VARCHAR(30) NOT NULL,
 role_id INTEGER(11),
-manager_id INTEGER(11) NULL
-)
+manager_id INTEGER(11) NULL,
+PRIMARY KEY(id)
+);
