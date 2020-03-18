@@ -4,6 +4,8 @@
   "description": "",
   "main": "server.js",
   "dependencies": {
+    "color": "^3.1.2",
+    "colors": "^1.4.0",
     "console.table": "^0.10.0",
     "inquirer": "^7.1.0",
     "mysql": "^2.18.1"

@@ -1,5 +1,6 @@
 let mysql = require("mysql");
 let inquirer = require("inquirer");
+let colors = require("colors");
 
 let connection = mysql.createConnection({
   host: "localhost",
@@ -15,7 +16,7 @@ connection.connect(function(err) {
 });
 
 function start() {
-  console.log("inside the start()");
+  //   console.log("inside the start()");
   inquirer
     .prompt([
       {
@@ -32,7 +33,7 @@ function start() {
       }
     ])
     .then(function(res) {
-      console.log(`You have chosen to ${res.action} ${res.option}`);
+      console.log(`You have chosen to ${res.action} ${res.option}`.bgGreen);
 
       switch (res.action) {
         case "Add":
@@ -111,6 +112,7 @@ function createData(option) {
               } else {
                 console.log(
                   `Inserting ${res.first_name} ${res.last_name} as a new employee`
+                    .bgGreen
                 );
                 connection.query(
                   "Insert INTO employees SET ?",
@@ -169,7 +171,7 @@ function createData(option) {
             if (res.department === "N/A") {
               genDepartmentPrompt();
             } else {
-              console.log("New role created");
+              console.log("New role created".bgGreen);
               connection.query(
                 "INSERT INTO role SET ?",
                 {
@@ -179,7 +181,7 @@ function createData(option) {
                 },
                 function(err, res) {
                   if (err) throw err;
-                  console.log("Role Inserted");
+                  console.log("Role Inserted".bgGreen);
                   continuePrompt();
                 }
               );
@@ -201,7 +203,7 @@ function createData(option) {
           }
         ])
         .then(function(res) {
-          console.log("New Department incoming.....");
+          console.log("New Department incoming.....".bgYellow);
           connection.query(
             "INSERT INTO department SET ?",
             {
@@ -209,7 +211,7 @@ function createData(option) {
             },
             function(err, res) {
               if (err) throw err;
-              console.log("Department inserted");
+              console.log("Department inserted".bgGreen);
               continuePrompt();
             }
           );
@@ -225,7 +227,7 @@ function createData(option) {
 function readData(res) {
   switch (res) {
     case "Employee":
-      console.log("Selecting all Employees");
+      console.log("Selecting all Employees".bgGreen);
       connection.query("Select * FROM employees", function(err, res) {
         if (err) throw err;
         console.table(res);
@@ -233,7 +235,7 @@ function readData(res) {
       });
       break;
     case "Role":
-      console.log("Selecting all roles");
+      console.log("Selecting all roles".bgGreen);
       connection.query("Select * from role", function(err, res) {
         if (err) throw err;
         console.table(res);
@@ -241,7 +243,7 @@ function readData(res) {
       });
       break;
     case "Department":
-      console.log("Selecting all Departments");
+      console.log("Selecting all Departments".bgGreen);
       connection.query("SELECT * FROM Department", function(err, res) {
         if (err) throw err;
         console.table(res);
@@ -271,7 +273,7 @@ function updateData(option) {
               value: object.id
             };
           });
-          console.log("Updating employee");
+          console.log("Updating employee".bgGreen);
           inquirer
             .prompt([
               {
@@ -288,13 +290,13 @@ function updateData(option) {
               }
             ])
             .then(function(res) {
-              console.log("Updating existing employee");
+              console.log("Updating existing employee".bgYellow);
               connection.query(
                 "UPDATE employees set ? where ?",
                 [{ role_id: res.role }, { id: res.employee }],
                 function(err, res) {
                   if (err) throw err;
-                  console.log("Employee Updated");
+                  console.log("Employee Updated".bgGreen);
                   continuePrompt();
                 }
               );
@@ -306,11 +308,11 @@ function updateData(option) {
       });
       break;
     case "Role":
-      console.log("Unable to update Role");
+      console.log("Unable to update Role".bgRed);
       continuePrompt();
       break;
     case "Department":
-      console.log("Unable to update Department");
+      console.log("Unable to update Department".bgRed);
       continuePrompt();
       break;
   }
@@ -339,7 +341,7 @@ function deleteData(option) {
             }
           ])
           .then(function(res) {
-            console.log("deleting employee");
+            console.log("deleting employee".bgYellow);
             connection.query(
               "DELETE FROM employees where ?",
               [
@@ -349,7 +351,7 @@ function deleteData(option) {
               ],
               function(err, res) {
                 if (err) throw err;
-                console.log("employee removed");
+                console.log("employee removed".bgGreen);
                 continuePrompt();
               }
             );
@@ -360,11 +362,11 @@ function deleteData(option) {
       });
       break;
     case "Role":
-      console.log("Unable to remove a role");
+      console.log("Unable to remove a role".bgRed);
       continuePrompt();
       break;
     case "Department":
-      console.log("Unable to remove a department");
+      console.log("Unable to remove a department".bgRed);
       continuePrompt();
       break;
   }
@@ -381,11 +383,12 @@ function continuePrompt() {
       choices: ["CONTINUE", "EXIT"]
     })
     .then(function(res) {
-      console.log(`${res.action}...\n`);
+      console.log(`${res.action}...\n`.brightBlue.bgYellow);
       switch (res.action) {
         case "EXIT":
           console.log(
-            "I'm gonna need you to go ahead and come in tomorrow. So if you could be here at around....9 that'd be great!"
+            "I'm gonna need you to go ahead and come in tomorrow. So if you could be here at around....9 that'd be great"
+              .red.bgYellow
           );
           connection.end();
           break;
