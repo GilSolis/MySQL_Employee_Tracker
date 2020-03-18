@@ -13,6 +13,9 @@ So that I can organize and plan my business
 * node.js
 * colors
 
+## Demo
+![Demonstration Gif](EMS.gif)
+
 # Link
 [Employee Management System](https://github.com/GilSolis/MySQL_Employee_Tracker)
 
