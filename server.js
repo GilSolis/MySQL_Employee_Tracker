@@ -263,12 +263,12 @@ function updateData(option) {
             value: object.id
           };
         });
-        connection.query("Select * FROM roles", function(err, res) {
+        connection.query("Select * FROM role", function(err, res) {
           if (err) throw err;
           const roles = res.map(object => {
             return {
               name: object.title,
-              value: id
+              value: object.id
             };
           });
           console.log("Updating employee");
@@ -384,6 +384,9 @@ function continuePrompt() {
       console.log(`${res.action}...\n`);
       switch (res.action) {
         case "EXIT":
+          console.log(
+            "I'm gonna need you to go ahead and come in tomorrow. So if you could be here at around....9 that'd be great!"
+          );
           connection.end();
           break;
         case "CONTINUE":
