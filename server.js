@@ -205,7 +205,7 @@ function createData(option) {
           connection.query(
             "INSERT INTO department SET ?",
             {
-              departmentName: res.departmentname
+              name: res.departmentname
             },
             function(err, res) {
               if (err) throw err;
@@ -234,7 +234,7 @@ function readData(res) {
       break;
     case "Role":
       console.log("Selecting all roles");
-      connection.query("Select * from roles", function(err, res) {
+      connection.query("Select * from role", function(err, res) {
         if (err) throw err;
         console.table(res);
         continuePrompt();
