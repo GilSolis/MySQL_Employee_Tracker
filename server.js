@@ -379,7 +379,32 @@ function continuePrompt() {
           connection.end();
           break;
         case "CONTINUE":
-          startPrompt();
+          start();
+          break;
+      }
+    })
+    .catch(function(err) {
+      console.log(err);
+    });
+}
+
+function genDepartmentPrompt() {
+  inquirer
+    .prompt({
+      name: "action",
+      type: "list",
+      message:
+        "Please finish adding this role by creating the appropriate department.",
+      choices: ["CONTINUE", "EXIT"]
+    })
+    .then(function(res) {
+      console.log(`${res.action}...\n`);
+      switch (res.action) {
+        case "EXIT":
+          connection.end();
+          break;
+        case "CONTINUE":
+          start();
           break;
       }
     })
