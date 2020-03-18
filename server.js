@@ -203,7 +203,7 @@ function createData(option) {
           }
         ])
         .then(function(res) {
-          console.log("New Department incoming.....".bgYellow);
+          console.log("New Department incoming.....".bgGreen);
           connection.query(
             "INSERT INTO department SET ?",
             {
@@ -290,7 +290,7 @@ function updateData(option) {
               }
             ])
             .then(function(res) {
-              console.log("Updating existing employee".bgYellow);
+              console.log("Updating existing employee".bgGreen);
               connection.query(
                 "UPDATE employees set ? where ?",
                 [{ role_id: res.role }, { id: res.employee }],
@@ -341,7 +341,7 @@ function deleteData(option) {
             }
           ])
           .then(function(res) {
-            console.log("deleting employee".bgYellow);
+            console.log("deleting employee".bgGreen);
             connection.query(
               "DELETE FROM employees where ?",
               [
@@ -383,7 +383,7 @@ function continuePrompt() {
       choices: ["CONTINUE", "EXIT"]
     })
     .then(function(res) {
-      console.log(`${res.action}...\n`.brightBlue.bgYellow);
+      console.log(`${res.action}...\n`.brightBlue.bgGreen);
       switch (res.action) {
         case "EXIT":
           console.log(
