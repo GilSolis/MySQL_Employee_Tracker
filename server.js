@@ -221,5 +221,114 @@ function readData(res){
         break;            
     }
 }
+//********update stuffs */
+
+function updateData(option){
+    switch (option) {
+        case "Employee":
+            connection.query("select * from employee", function (err, res){
+                if (err) throw err;
+                const employees = res.map(object => {
+                    return {
+                        name: `${object.first_name} ${object.last_name}`,
+                        value: object.id
+                    }
+                });
+            connection.query("Select * FROM roles", function(err, res){
+                if (err) throw err;
+                const roles = res.map(object => {
+                    return{
+                        name: object.title,
+                        value: id
+                    }
+                });            
+                console.log("Updating employee");
+                inquirer.prompt([{
+                    name: "employee",
+                    type: "list",
+                    message: "Which employee would you like to update?",
+                    choices: employees
+                },
+                {
+                    name: "role",
+                    type: "list",
+                    message: "What's their new role?",
+                    choices: roles
+                }]).then(function (res){
+                    console.log("Updating existing employee")
+                    connection.query("UPDATE employee set ? where ?", [{role_id: res.role},
+                    {id: res.employee}],function(err, res){
+                        if(err) throw err;
+                        console.log("Employee Updated");
+                        continuePrompt()
+                    }
+                    )
+                }).catch(function (err){
+                    console.log(err);
+                })
+            })
+        })
+            break;
+        case "Role":
+            console.log("Unable to update Role");
+            continuePrompt()
+            break;
+        case "Department":
+            console.log("Unable to update Department");
+            continuePrompt()
+            break;
+        }};
+
+//*******Delete stuffs */
+
+function deleteData(option){
+    switch(option){
+        case 'Employee':
+        connection.query("Select * from employee", function(err, res){
+            if(err) throw err;
+            const employees = res.map(object => {
+                return {
+                    name: `${object.first_name} ${object.last_name}`,
+                    value: object.id
+                }
+            });
+            inquirer.prompt([{
+                name: "employee",
+                type: "list",
+                message: "Which employee would you like to delete?",
+                choices: employees
+
+            }]).then(function (res){
+                console.log("deleting employee");
+                connection.query (
+                    "DELETE FROM employee where ?",
+                    [{
+                        id: res.employee
+                    }],
+                    function (err, res){
+                        if (err) throw err;
+                        console.log("employee removed");
+                        continuePrompt()
+                    }
+                )
+            }).catch(function (err) {
+                console.log(err);
+            })
+        })
+            break;
+        case "Role":
+            console.log("Unable to remove a role");
+            continuePrompt()
+            break;
+        case "Department":
+            console.log("Unable to remove a department");
+            continuePrompt()
+            break;
+    }
+}
+
+//*************Continue */
+        
+
 
 
