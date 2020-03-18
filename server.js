@@ -240,6 +240,14 @@ function readData(res) {
         continuePrompt();
       });
       break;
+    case "Department":
+      console.log("Selecting all Departments");
+      connection.query("SELECT * FROM Department", function(err, res) {
+        if (err) throw err;
+        console.table(res);
+        continuePrompt();
+      });
+      break;
   }
 }
 //********update stuffs */
